@@ -3,10 +3,11 @@ import { env } from "./env";
 
 export class MongooseConfig{
     static initiAlizeDatabase(){
+        console.log('rodou!')
         try {
-            connection.on('Error', (erro)=> console.log('Falha na conexão. Erro: ', erro))
-            .on('Open', (open)=>console.log('Conectado ao MongoDB'))
-            .on('Close', (close)=>console.log('Desconectado do MongoDB'))
+            connection.on('error', (erro:any)=> {console.log(`Falha na conexão. Erro:${erro}`)})
+            .on('open', ()=>console.log('Conectado ao MongoDB'))
+            .on('close', ()=>console.log('Desconectado do MongoDB'))
             connect(process.env.MONGO_URL as string)
         } catch (error:any) {
             console.log('Falha na conexão: ', error)            
