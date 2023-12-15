@@ -31,4 +31,13 @@ export class UserController {
             res.status(500).json(error)
         }        
     }
+    async login(req: Request, res: Response){
+        try {
+            const {body}= req
+            const result = await this.service.login(body)
+            res.status(200).json(result)            
+        } catch (error:any) {
+            res.status(401).json(error)            
+        }
+    }
 }

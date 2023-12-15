@@ -4,6 +4,7 @@ import { CreateUserResponse, IUserService } from "./User-service-interface/User-
 import { User } from "../Model/Users-domain";
 import bcrypt from 'bcrypt'
 import { LoginDto } from "../Model/User-dto/Login-Dto";
+import jwt from 'jsonwebtoken'
 
 
 export class UserService implements IUserService {
@@ -53,7 +54,15 @@ export class UserService implements IUserService {
         if(!isPasswordValid){
             throw new Error("Usuário ou senha inválido")
         }
-        
+        const payload = {
+            ...user,
+        }
+        const secretKey = process.env.JWT_SECRET_KEY as string
+        const options = {
+            expiresIn: '1d'
+        }
+        const token = jwt.sign(payload, secretKey, options)
+        return token
     }
     
     
